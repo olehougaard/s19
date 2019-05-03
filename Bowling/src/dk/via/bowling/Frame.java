@@ -1,7 +1,7 @@
 package dk.via.bowling;
 
 public class Frame {
-	private int[] points;
+	protected int[] points;
 	protected int rolls;
 	
 	public Frame() {
@@ -23,10 +23,7 @@ public class Frame {
 	}
 	
 	public int getRemainingPins() {
-		if (rolls == 1)
-			return 10 - points[0];
-		else
-			return 10;
+		return 10 - totalPoints() % 10;
 	}
 	
 	public boolean isPlayed() {
@@ -44,8 +41,12 @@ public class Frame {
 
 	public int getPoints() {
 		if (isScored())
-			return points[0] + points[1] + points[2];
+			return totalPoints();
 		else
 			return 0;
+	}
+
+	private int totalPoints() {
+		return points[0] + points[1] + points[2];
 	}
 }

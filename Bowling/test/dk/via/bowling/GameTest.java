@@ -139,7 +139,7 @@ public class GameTest {
 	
 	@Test
 	public void extraThrowSpareLastFrame() {
-		Game game = new Game(1);
+		game = new Game(1);
 		game.roll(4);
 		game.roll(6);
 		assertEquals(1, game.getFrameNumber());
@@ -149,7 +149,7 @@ public class GameTest {
 	
 	@Test
 	public void twoExtraThrowsStrikeLastFrame() {
-		Game game = new Game(1);
+		game = new Game(1);
 		game.roll(10);
 		assertEquals(1, game.getFrameNumber());
 		game.roll(4);
@@ -166,7 +166,7 @@ public class GameTest {
 	
 	@Test(expected=IllegalStateException.class)
 	public void itsIllegalToThrowPastFinalFrame() {
-		Game game = new Game(1);
+		game = new Game(1);
 		game.roll(3);
 		game.roll(6);
 		game.roll(3);
@@ -182,10 +182,67 @@ public class GameTest {
 		game.roll(11);
 	}
 	
-	@Test(expected=IllegalStateException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void itsIllegalToThrowMoreThanRemainingNumberOfPins() {
 		game.roll(5);
 		game.roll(6);
+	}
+	
+	@Test
+	public void theLastFrameHas10RemainingPinsAfterASpare() {
+		game = new Game(1);
+		game.roll(6);
+		game.roll(4);
+		game.roll(10);
+		assertEquals(20, game.getPoints());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void theLastFrameDoesNotHaveMoreThan10RemainingPinsAfterASpare() {
+		game = new Game(1);
+		game.roll(6);
+		game.roll(4);
+		game.roll(11);
+	}
+	
+	@Test
+	public void theLastFrameHas10RemainingPinsAfterAStrike() {
+		game = new Game(1);
+		game.roll(10);
+		game.roll(10);
+		assertEquals(1, game.getFrameNumber());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void theLastFrameDoesNotHaveMoreThan10RemainingPinsAfterAStrike() {
+		game = new Game(1);
+		game.roll(10);
+		game.roll(11);
+	}
+	
+	@Test
+	public void theLastFrameHas10RemainingPinsAfterTwoStrikes() {
+		game = new Game(1);
+		game.roll(10);
+		game.roll(10);
+		game.roll(10);
+		assertEquals(30, game.getPoints());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void theLastFrameDoesNotHaveMoreThan10RemainingPinsAfterTwoStrikes() {
+		game = new Game(1);
+		game.roll(10);
+		game.roll(10);
+		game.roll(11);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void theLastFrameDoesNotAllowThrowingMoreThanRemainingPinsAfterAStrikeAndAnOpenThrow() {
+		game = new Game(1);
+		game.roll(10);
+		game.roll(7);
+		game.roll(4);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)

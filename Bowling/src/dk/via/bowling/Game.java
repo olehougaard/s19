@@ -41,7 +41,7 @@ public class Game {
 			throw new IllegalArgumentException(String.format("Can only roll from 0 to 10 pins (was %d).", pins));
 		int remainingPins = frames[frameNumber - 1].getRemainingPins();
 		if (pins > remainingPins) 
-			throw new IllegalStateException(String.format("Cannot roll more than remaining pins. %d > %d", pins, remainingPins));
+			throw new IllegalArgumentException(String.format("Cannot roll more than remaining pins. %d > %d", pins, remainingPins));
 	}
 
 	public int getPoints(int frameNumber) {
