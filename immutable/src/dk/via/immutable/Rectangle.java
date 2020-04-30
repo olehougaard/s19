@@ -1,4 +1,4 @@
-package dk.via.mutable;
+package dk.via.immutable;
 
 import java.util.Objects;
 
